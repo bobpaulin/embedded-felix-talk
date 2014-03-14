@@ -14,10 +14,10 @@ public class AltTankSoarVisualWorld extends TankSoarVisualWorld {
 	public AltTankSoarVisualWorld(BundleContext bundleContext, Composite parent, int style, int cellSize) {
 		super(parent, style, cellSize);
 		try{
-			tanks[Direction.SOUTH.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("tank_down.gif").openStream());
-			tanks[Direction.NORTH.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("tank_up.gif").openStream());
-			tanks[Direction.EAST.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("tank_right.gif").openStream());
-			tanks[Direction.WEST.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("tank_left.gif").openStream());
+			tanks[Direction.SOUTH.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("cat.gif").openStream());
+			tanks[Direction.NORTH.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("cat.gif").openStream());
+			tanks[Direction.EAST.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("cat.gif").openStream());
+			tanks[Direction.WEST.ordinal()] = new Image(display, bundleContext.getBundle().getEntry("cat.gif").openStream());
 		}catch( IOException e)
 		{
 			e.printStackTrace();
