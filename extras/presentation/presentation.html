@@ -57,6 +57,114 @@
 				</section>
 				
 				<section>
+					<h2>Regret</h2>
+				</section>
+				<section>
+					<h2>Application Development from the eyes of a developer</h2>
+					<img src="images/DeveloperCycle.jpg"/>
+				</section>
+				<section>
+					<h2>Hope?</h2>
+					<!-- spagetti pic -->
+				</section>
+				<section>
+					<h2>If we could start over what would we want?</h2>
+					<!-- Baby pic -->
+				</section>
+				<section>
+					<h2>Modularity</h2>
+				</section>
+				<section>
+					<h2>Options?</h2>
+				</section>
+				<section>
+					<h2>OSGi</h2>
+				</section>
+				<section>
+					<ul>
+						<li>Mature 10+ Years</li>
+						<li>Supported by Tools</li>
+						<li>Modularity is enforced by Contracts</li>
+						<li>Versioning</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Inversion of Control (IoC)</h2>
+				</section>
+				<section>
+					<ul>
+						<li>Lightweight</li>
+						<li>Easily added to existing systems</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Jigsaw</h2>
+				</section>
+				<section>
+					<ul>
+						<li>Java 9?</li>
+						<li>Versioning</li>
+						<li>Interoperability with OSGi</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>OSGi: When does embedding make sense?</h2>
+					</section>
+					<section>
+						<h2>Lots of Native Code</h2>
+					</section>
+					<section>
+						<h2>Licensing/Proprietary Code</h2>
+					</section>
+					<section>
+						<h2>No Budget/Time/Desire for full OSGi</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Embedded Design/Implementation </h3>
+						<img src="images/Architecture.jpg"/>
+					</section>
+					<section>
+						<h3>Minimum required bundles</h3>
+					</section>
+					<section>
+						<h3>Exposing packages to the framework via System Packages</h3>
+						<aside class="notes">
+							Talk about advantages over bootdelegation and extention bundle
+						</aside>
+					</section>
+					<section>
+						<!-- Code and discuss implications -->
+						<pre><code data-trim contenteditable>
+configMap.put(Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
+	"edu.umich.soar,edu.umich.soar.gridmap2d.config," +
+	"edu.umich.soar.modules.services," +
+	"edu.umich.soar.gridmap2d,edu.umich.soar.gridmap2d.world," +
+	"edu.umich.soar.gridmap2d.visuals," +
+	"org.eclipse.swt.widgets,org.eclipse.swt.graphics; version=0.0.1");
+						</code></pre>
+					</section>
+					<section>
+						<h3>Supplying Services to the Non-OSGi code</h3>
+					</section>
+					<section>
+						<pre><code data-trim contenteditable>
+public &lt;S&gt; S getService(Class&lt;S&gt; serviceClass)
+{
+	ServiceReference&lt;S&gt; ref = m_activator.getContext()
+		.getServiceReference(serviceClass);
+	return m_activator.getContext().getService(ref);
+}
+							
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>DEMO!</h1>
+				</section>
+				<section>
 					<h2>References</h2>
 					<div>
 						<h4>Code and Presentation</h4>

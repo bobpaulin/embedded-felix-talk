@@ -1,7 +1,5 @@
 package com.bobpaulin.soar.config.service.impl;
 
-import org.eclipse.swt.widgets.Composite;
-
 import java.util.Dictionary;
 
 import org.apache.felix.scr.annotations.Component;
@@ -9,16 +7,17 @@ import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.PropertyUnbounded;
 import org.apache.felix.scr.annotations.Service;
+import org.eclipse.swt.widgets.Composite;
 import org.osgi.service.component.ComponentContext;
 
 import com.bobpaulin.soar.config.service.AbstractSoarGameConfig;
 
 import edu.umich.soar.gridmap2d.CognitiveArchitecture;
 import edu.umich.soar.gridmap2d.config.GameConfig;
-import edu.umich.soar.gridmap2d.config.TankSoarConfig;
-import edu.umich.soar.gridmap2d.visuals.TankSoarVisualWorld;
+import edu.umich.soar.gridmap2d.config.TaxiConfig;
+import edu.umich.soar.gridmap2d.visuals.TaxiVisualWorld;
 import edu.umich.soar.gridmap2d.visuals.VisualWorld;
-import edu.umich.soar.gridmap2d.world.TankSoarWorld;
+import edu.umich.soar.gridmap2d.world.TaxiWorld;
 import edu.umich.soar.gridmap2d.world.World;
 import edu.umich.soar.modules.services.SoarGameConfig;
 import edu.umich.soar.modules.services.WorldFactory;
@@ -58,81 +57,47 @@ import edu.umich.soar.modules.services.WorldFactory;
 	@Property(name = AbstractSoarGameConfig.TIMEOUT, intValue=15),
 	@Property(name = AbstractSoarGameConfig.AFTER, boolValue=true)
 })
-public class SoarTankGameConfig extends AbstractSoarGameConfig implements SoarGameConfig {
-	
-	//Tank Specific
-	@Property(intValue=15)
-	private static final String MAX_MISSILES = "max_missiles";
-	@Property(intValue=1000)
-	private static final String MAX_ENERGY = "max_energy";
-	@Property(intValue=1000)
-	private static final String MAX_HEALTH = "max_health";
-	@Property(intValue=-100)
-	private static final String COLLISION_PENALTY = "collision_penalty";
-	@Property(intValue=3)
-	private static final String MAX_MISSILE_PACKS = "max_missile_packs";
+public class SoarTaxiGameConfig extends AbstractSoarGameConfig implements SoarGameConfig {
+	//Taxi Specific
+	@Property(boolValue=false)
+	private static final String DISABLE_FUEL = "disable_fuel";
 	@Property(intValue=5)
-	private static final String MISSILE_PACK_RESPAWN_CHANCE = "missile_pack_respawn_chance";
-	@Property(intValue=-20)
-	private static final String SHIELD_ENERGY_USAGE = "shield_energy_usage";
-	@Property(intValue=2)
-	private static final String MISSILE_HIT_AWARD = "missile_hit_award";
-	@Property(intValue=-1)
-	private static final String MISSILE_HIT_PENALTY = "missile_hit_penalty";
-	@Property(intValue=3)
-	private static final String FRAG_AWARD = "frag_award";
-	@Property(intValue=-2)
-	private static final String FRAG_PENALTY = "frag_penalty";
-	@Property(intValue=7)
-	private static final String MAX_SOUND_DISTANCE = "max_sound_distance";
-	@Property(intValue=100)
-	private static final String MISSILE_RESET_THRESHOLD = "missile_reset_threshold";
+	private static final String FUEL_STARTING_MINIMUM = "fuel_starting_minimum";
+	@Property(intValue=12)
+	private static final String FUEL_STARTING_MAXIMUM = "fuel_starting_maximum";
+	@Property(intValue=14)
+	private static final String FUEL_MAXIMUM = "fuel_maximum";
 	
-	private TankSoarConfig tankSoarConfig;
-	
-	protected void activate(ComponentContext context) {
-		
-		
-		
-		this.tankSoarConfig = new TankSoarConfig();
-		
-		final Dictionary<?, ?> properties = context.getProperties();
-		
+	private TaxiConfig taxiConfig;
+
+	public void activate(ComponentContext context)
+	{
+		Dictionary<?, ?> properties = context.getProperties();
 		processProperties(properties);
+		this.taxiConfig = new TaxiConfig();
 		
-		//Tank
-		this.tankSoarConfig.collision_penalty = (Integer)properties.get(COLLISION_PENALTY);
-		this.tankSoarConfig.frag_award = (Integer) properties.get(FRAG_AWARD);
-		this.tankSoarConfig.frag_penalty = (Integer)properties.get(FRAG_PENALTY);
-		this.tankSoarConfig.max_energy = (Integer)properties.get(MAX_ENERGY);
-		this.tankSoarConfig.max_health = (Integer)properties.get(MAX_HEALTH);
-		this.tankSoarConfig.max_missile_packs = (Integer)properties.get(MAX_MISSILE_PACKS);
-		this.tankSoarConfig.max_missiles = (Integer) properties.get(MAX_MISSILES);
-		this.tankSoarConfig.max_sound_distance = (Integer) properties.get(MAX_SOUND_DISTANCE);
-		this.tankSoarConfig.missile_hit_award = (Integer) properties.get(MISSILE_HIT_AWARD);
-		this.tankSoarConfig.missile_hit_penalty = (Integer) properties.get(MISSILE_HIT_PENALTY);
-		this.tankSoarConfig.missile_pack_respawn_chance  = (Integer) properties.get(MISSILE_PACK_RESPAWN_CHANCE);
-		this.tankSoarConfig.missile_reset_threshold = (Integer) properties.get(MISSILE_RESET_THRESHOLD);
-		this.tankSoarConfig.shield_energy_usage = (Integer) properties.get(SHIELD_ENERGY_USAGE);
+		this.taxiConfig.disable_fuel = (Boolean)properties.get(DISABLE_FUEL);
+		this.taxiConfig.fuel_maximum = (Integer)properties.get(FUEL_MAXIMUM);
+		this.taxiConfig.fuel_starting_maximum = (Integer)properties.get(FUEL_STARTING_MAXIMUM);
+		this.taxiConfig.fuel_starting_minimum = (Integer)properties.get(FUEL_STARTING_MINIMUM);
+
 	}
-	
 	public String getConfigName() {
-		return "tanksoar";
+		return "taxi";
 	}
 	
 	public GameConfig getGameConfig() {
-		return this.tankSoarConfig;
+		return this.taxiConfig;
 	}
 	
 	public WorldFactory getWorldFactory() {
 		return new WorldFactory() {
 			
 			public World createWorld(CognitiveArchitecture cogArch) {
-			
-				return new TankSoarWorld(tankSoarConfig.max_missile_packs, cogArch);
+				return new TaxiWorld(cogArch, taxiConfig.fuel_starting_minimum, taxiConfig.fuel_starting_maximum, taxiConfig.fuel_maximum, taxiConfig.disable_fuel);
 			}
 			public VisualWorld createVisualWorld(Composite parent, int style, int cellSize) {
-				return new TankSoarVisualWorld(parent, style, cellSize);
+				return new TaxiVisualWorld(parent, style, cellSize);
 			}
 		};
 	}
