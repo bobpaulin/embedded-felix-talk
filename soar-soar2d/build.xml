@@ -1,4 +1,4 @@
-<project name="soar-soar2d" default="build" basedir=".">
+<project name="soar-soar2d" default="build" basedir="." xmlns:sonar="antlib:org.sonar.ant">
 
 	<property name="manifest.classpath" value="java/stopwatch-0.4-with-deps.jar java/commons-logging-1.1.1.jar java/log4j-1.2.15.jar java/soar-smljava.jar java/soar-debugger.jar java/swt.jar java/sml.jar" />
 	<property name="jar.main.class" value="edu.umich.soar.gridmap2d.Gridmap2D" />
@@ -27,6 +27,19 @@
 	<property name="doc.excludepackagenames" value="edu.umich.demos.*"/>
 	<property name="doc.destdir" location="${doc}/${ant.project.name}/api"/>
 	<property name="doc.windowtitle" value="${ant.project.name} ${version}"/>
+	
+	<!-- Sonar -->
+		<!-- Define the SonarQube project properties -->
+		<property name="sonar.projectKey" value="edu.umich.soar.gridmap2d:SoarTankEaters" />
+		<property name="sonar.projectName" value="Soar Tank Eaters Game" />
+		<property name="sonar.projectVersion" value="1.0" />
+		<property name="sonar.branch" value="embedded-felix"/>
+		<property name="sonar.language" value="java" />
+		<property name="sonar.sources" value="src/main/java" />
+		<property name="sonar.tests" value="src/test/java" />
+		<property name="sonar.libraries" value="lib/*.jar" />
+		<property name="sonar.binaries" value="${target.classes}" />
+
 
 	<target name="init" >
 		<mkdir dir="${target}" />
@@ -98,6 +111,17 @@
 	</target>
 
 	<target name="build" depends="swt,jar" />
+	
+	<!-- Define the SonarQube target -->
+		<target name="sonar">
+		    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+		        <!-- Update the following line, or put the "sonar-ant-task-*.jar" file in your "$HOME/.ant/lib" folder -->
+		        <classpath path="path/to/sonar/ant/task/lib/sonar-ant-task-*.jar" />
+		    </taskdef>
+		 
+		    <!-- Execute the SonarQube analysis -->
+		    <sonar:sonar />
+		</target>
 
 </project>
 

@@ -3,23 +3,19 @@ package edu.umich.soar.modules;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-public class HostActivator implements BundleActivator
-{
-    private BundleContext m_context = null;
+public class HostActivator implements BundleActivator {
+	private BundleContext context = null;
 
-    public void start(BundleContext context)
-    {
-        m_context = context;
-    }
+	public void start(BundleContext context) {
+		this.context = context;
+	}
 
-    public void stop(BundleContext context)
-    {
-        m_context = null;
-    }
+	public void stop(BundleContext context) {
+		this.context = null;
+	}
 
-    public BundleContext getContext()
-    {
-        return m_context;
-    }
-    
+	public BundleContext getContext() {
+		return this.context;
+	}
+
 }

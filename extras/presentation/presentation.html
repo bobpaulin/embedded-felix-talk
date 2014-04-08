@@ -49,7 +49,7 @@
 						<li>Independent Consultant</li>
 						<li>Business Enablement</li>
 						<li>Web Centric Platforms</li>
-						<li>Automation</li>
+						<li>Continuous Delivery</li>
 					</ul>
 					<aside class="notes">
 						This is a talk about Regret!
@@ -58,6 +58,9 @@
 				
 				<section>
 					<h2>Regret</h2>
+					<img src="images/regret2.jpg"/>
+					<aside class="notes">
+					</aside>
 				</section>
 				<section>
 					<h2>Application Development from the eyes of a developer</h2>
@@ -65,20 +68,23 @@
 				</section>
 				<section>
 					<h2>Hope?</h2>
-					<!-- spagetti pic -->
+					<img src="images/regret.jpg"/>
 				</section>
 				<section>
 					<h2>If we could start over what would we want?</h2>
-					<!-- Baby pic -->
+					<!-- Jake Baby pic -->
 				</section>
 				<section>
 					<h2>Modularity</h2>
+					<!-- Lego Picture -->
 				</section>
 				<section>
 					<h2>Options?</h2>
+					<!-- Kaitlyn Professor -->
 				</section>
 				<section>
 					<h2>OSGi</h2>
+					<!-- OSGi Picture -->
 				</section>
 				<section>
 					<ul>
@@ -90,6 +96,7 @@
 				</section>
 				<section>
 					<h2>Inversion of Control (IoC)</h2>
+					<!-- Spring Picture -->
 				</section>
 				<section>
 					<ul>
@@ -99,6 +106,7 @@
 				</section>
 				<section>
 					<h2>Jigsaw</h2>
+					<!-- Jigsaw Picture -->
 				</section>
 				<section>
 					<ul>
@@ -112,7 +120,10 @@
 						<h2>OSGi: When does embedding make sense?</h2>
 					</section>
 					<section>
-						<h2>Lots of Native Code</h2>
+						<h2>Lots of Tightly Coupled Code</h2>
+					</section>
+					<section>
+						<h2>Want an Isolated Third-Party Container</h2>
 					</section>
 					<section>
 						<h2>Licensing/Proprietary Code</h2>
@@ -128,11 +139,24 @@
 					</section>
 					<section>
 						<h3>Minimum required bundles</h3>
+						<ul>
+							<li>Felix Framework</li>
+						</ul>
+					</section>
+					<section>
+						<h3>A few more to consider...</h3>
+						<ul>
+							<li>Felix Config Admin</li>
+							<li>Gogo Shell</li>
+							<li>Web Console + HTTP</li>
+							<li>SCR Annotations</li>
+							<li>Apache ACE Management Agent</li>
+						</ul>
 					</section>
 					<section>
 						<h3>Exposing packages to the framework via System Packages</h3>
 						<aside class="notes">
-							Talk about advantages over bootdelegation and extention bundle
+							Talk about advantages over bootdelegation and extention bundle.  BootDelegation does not require Bundles to import classes. System allows more control.
 						</aside>
 					</section>
 					<section>
@@ -144,6 +168,16 @@ configMap.put(Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
 	"edu.umich.soar.gridmap2d,edu.umich.soar.gridmap2d.world," +
 	"edu.umich.soar.gridmap2d.visuals," +
 	"org.eclipse.swt.widgets,org.eclipse.swt.graphics; version=0.0.1");
+						</code></pre>
+					</section>
+					<section>
+						<h3>Setting up the Framework</h3>
+						<pre><code data-trim contenteditable>
+//Yup it's that easy!
+m_felix = new Felix(configMap);
+
+m_felix.start();
+						
 						</code></pre>
 					</section>
 					<section>
@@ -163,6 +197,20 @@ public &lt;S&gt; S getService(Class&lt;S&gt; serviceClass)
 				</section>
 				<section>
 					<h1>DEMO!</h1>
+					<!--  Cat Picture -->
+					<aside class="notes">
+						Soar.  
+						How do I demonstrate the improvements?
+						LOC?
+						Sonar?
+						Class diagram?
+						Search for coupling?
+						Integration with CI?
+						Compare updates with new requirements?
+					</aside>
+				</section>
+				<section>
+					<h2>Closing Thoughts</h2>
 				</section>
 				<section>
 					<h2>References</h2>

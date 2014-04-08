@@ -6,14 +6,19 @@ import java.util.Dictionary;
 import java.util.List;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import edu.umich.soar.gridmap2d.config.ClientConfig;
 import edu.umich.soar.gridmap2d.config.GeneralConfig;
 import edu.umich.soar.gridmap2d.config.PlayerConfig;
 import edu.umich.soar.gridmap2d.config.SoarConfig;
 import edu.umich.soar.gridmap2d.config.TerminalsConfig;
+import edu.umich.soar.modules.OsgiMain;
 
 public abstract class AbstractSoarGameConfig {
+	
+	private static final Log LOGGER = LogFactory.getLog(AbstractSoarGameConfig.class);
 
 	// General
 	public static final String CYCLE_TIME_SLICE = "cycle_time_slice";
@@ -116,11 +121,11 @@ public abstract class AbstractSoarGameConfig {
 										BeanUtils.setProperty(currentPlayerConfig, playerKeyValue[0], playerKeyValue[1]);
 							
 									} catch (IllegalArgumentException e) {
-										e.printStackTrace();
+										LOGGER.warn("Could not Set Property", e);
 									} catch (IllegalAccessException e) {
-										e.printStackTrace();
+										LOGGER.warn("Could not Set Property", e);
 									} catch (InvocationTargetException e) {
-										e.printStackTrace();
+										LOGGER.warn("Could not Set Property", e);
 									}
 									
 								}
