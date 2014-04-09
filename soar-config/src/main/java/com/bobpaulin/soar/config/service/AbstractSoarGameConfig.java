@@ -74,7 +74,7 @@ public abstract class AbstractSoarGameConfig {
 		this.soarConfig = new SoarConfig();
 		this.terminalsConfig = new TerminalsConfig();
 		this.clientConfig = new ClientConfig();
-		this.playerConfigList = new ArrayList<>();
+		this.playerConfigList = new ArrayList<PlayerConfig>();
 	}
 	
 	public void processProperties(Dictionary<?, ?> properties)

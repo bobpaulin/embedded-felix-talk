@@ -11,8 +11,8 @@ import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.component.ComponentContext;
 
-import edu.umich.soar.modules.services.SoarConfigFactoryService;
-import edu.umich.soar.modules.services.SoarGameConfig;
+import edu.umich.soar.gridmap2d.config.SoarConfigFactoryService;
+import edu.umich.soar.gridmap2d.config.SoarGameConfig;
 
 @Component(metatype = true,immediate=true)
 @Service

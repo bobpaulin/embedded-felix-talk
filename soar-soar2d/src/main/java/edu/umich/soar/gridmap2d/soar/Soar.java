@@ -25,7 +25,6 @@ import edu.umich.soar.gridmap2d.players.Tank;
 import edu.umich.soar.gridmap2d.players.TankCommander;
 import edu.umich.soar.gridmap2d.players.Taxi;
 import edu.umich.soar.gridmap2d.players.TaxiCommander;
-
 import sml.Agent;
 import sml.ConnectionInfo;
 import sml.Kernel;

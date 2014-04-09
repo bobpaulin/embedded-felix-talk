@@ -14,13 +14,12 @@ import com.bobpaulin.soar.config.service.AbstractSoarGameConfig;
 
 import edu.umich.soar.gridmap2d.CognitiveArchitecture;
 import edu.umich.soar.gridmap2d.config.GameConfig;
+import edu.umich.soar.gridmap2d.config.SoarGameConfig;
 import edu.umich.soar.gridmap2d.config.TaxiConfig;
 import edu.umich.soar.gridmap2d.visuals.TaxiVisualWorld;
 import edu.umich.soar.gridmap2d.visuals.VisualWorld;
 import edu.umich.soar.gridmap2d.world.TaxiWorld;
 import edu.umich.soar.gridmap2d.world.World;
-import edu.umich.soar.modules.services.SoarGameConfig;
-import edu.umich.soar.modules.services.WorldFactory;
 
 @Component(immediate=true,metatype=true)
 @Service
@@ -90,15 +89,13 @@ public class SoarTaxiGameConfig extends AbstractSoarGameConfig implements SoarGa
 		return this.taxiConfig;
 	}
 	
-	public WorldFactory getWorldFactory() {
-		return new WorldFactory() {
-			
-			public World createWorld(CognitiveArchitecture cogArch) {
-				return new TaxiWorld(cogArch, taxiConfig.fuel_starting_minimum, taxiConfig.fuel_starting_maximum, taxiConfig.fuel_maximum, taxiConfig.disable_fuel);
-			}
-			public VisualWorld createVisualWorld(Composite parent, int style, int cellSize) {
-				return new TaxiVisualWorld(parent, style, cellSize);
-			}
-		};
+	@Override
+	public String getWorldName() {
+		return getConfigName();
+	}
+	
+	@Override
+	public String getVisualWorldName() {
+		return getConfigName();
 	}
 }

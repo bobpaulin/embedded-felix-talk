@@ -20,9 +20,4 @@ public class ModuleException extends RuntimeException {
 		super(message, cause);
 	}
 
-	public ModuleException(String message, Throwable cause,
-			boolean enableSuppression, boolean writableStackTrace) {
-		super(message, cause, enableSuppression, writableStackTrace);
-	}
-
 }

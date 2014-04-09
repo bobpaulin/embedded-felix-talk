@@ -20,6 +20,7 @@ import edu.umich.soar.gridmap2d.world.EatersWorld;
 import edu.umich.soar.gridmap2d.world.TankSoarWorld;
 import edu.umich.soar.gridmap2d.world.TaxiWorld;
 import edu.umich.soar.gridmap2d.world.World;
+import edu.umich.soar.gridmap2d.world.WorldFactory;
 
 
 /**
@@ -39,7 +40,7 @@ public class Simulation {
 	private CognitiveArchitecture cogArch;
 	private int worldCount;
 
-	World initialize(SimConfig config) {
+	World initialize(SimConfig config, WorldFactory worldFactory) {
 		
 		Stopwatch.setActive(false);
 		
@@ -68,7 +69,7 @@ public class Simulation {
 		
 		logger.trace(Names.Trace.loadingWorld);
 		
-		world = config.createWorld(cogArch);
+		world = worldFactory.createWorld(cogArch);
 			
 		world.setForceHumanInput(config.generalConfig().force_human);
 		Gridmap2D.control.setRunsTerminal(config.generalConfig().runs);

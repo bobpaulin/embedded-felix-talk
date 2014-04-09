@@ -13,10 +13,12 @@ import org.apache.commons.logging.LogFactory;
 import edu.umich.soar.SoarProperties;
 import edu.umich.soar.config.ParseError;
 import edu.umich.soar.gridmap2d.config.SimConfig;
+import edu.umich.soar.gridmap2d.config.SoarConfigFactoryService;
 import edu.umich.soar.gridmap2d.visuals.WindowManager;
 import edu.umich.soar.gridmap2d.world.World;
 import edu.umich.soar.modules.OsgiMain;
-import edu.umich.soar.modules.services.SoarConfigFactoryService;
+import edu.umich.soar.gridmap2d.world.WorldFactory;
+import edu.umich.soar.gridmap2d.visuals.VisualWorldFactory;
 
 /*
  * A note about log levels:
@@ -52,7 +54,11 @@ public class Gridmap2D {
 	public static final Controller control = new Controller();
 	
 	public static SoarConfigFactoryService configFactoryService;
-
+	
+	public static WorldFactory worldFactory;
+	
+	public static VisualWorldFactory visualWorldFactory;
+	
 	public static final String parent = System.getProperty("user.dir") + File.separator + "soar2d";
 
 	static {
@@ -83,12 +89,17 @@ public class Gridmap2D {
 		}
 		
 		loadConfig(args);
-
+		
+		visualWorldFactory = OsgiMain.getInstance().getService(VisualWorldFactory.class, "(visualWorldName=" + config.getVisualWorldName() + ")");
+		worldFactory = OsgiMain.getInstance().getService(WorldFactory.class, "(worldName=" + config.getWorldName() + ")");
+		
 		// if using gui
 		boolean usingGUI = !config.generalConfig().headless;
 		if (usingGUI) {
 			// initialize wm
-			wm.setWorldFactory(config.getWorldFactory());
+			
+			wm.setWorldFactory(worldFactory);
+			wm.setVisualWorldFactory(visualWorldFactory);
 			logger.trace(Names.Trace.initDisplay);
 			if (!wm.initialize()) {
 				fatalError(Names.Errors.initDisplayfail);
@@ -97,7 +108,7 @@ public class Gridmap2D {
 
 		// Initialize simulation
 		logger.trace(Names.Trace.initSimulation);
-		World world = simulation.initialize(config);
+		World world = simulation.initialize(config, worldFactory);
 		
 		if (usingGUI) {
 			// Run GUI
@@ -182,6 +193,7 @@ public class Gridmap2D {
 	public static void main(String[] args) {
 		
 		configFactoryService = OsgiMain.getInstance().getService(SoarConfigFactoryService.class);
+		
 		
 		new Gridmap2D(args);
 		

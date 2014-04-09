@@ -29,7 +29,7 @@ public class OsgiMain {
 		// Export the host provided service interface package.
 		configMap
 				.put(Constants.FRAMEWORK_SYSTEMPACKAGES_EXTRA,
-						"edu.umich.soar,edu.umich.soar.gridmap2d.config,edu.umich.soar.modules.services,edu.umich.soar.gridmap2d,edu.umich.soar.gridmap2d.world,edu.umich.soar.gridmap2d.visuals,org.eclipse.swt.widgets,org.eclipse.swt.graphics; version=0.0.1");
+						"edu.umich.soar,edu.umich.soar.gridmap2d.config,edu.umich.soar.gridmap2d,edu.umich.soar.gridmap2d.world,edu.umich.soar.gridmap2d.visuals,org.eclipse.swt.widgets,org.eclipse.swt.graphics; version=0.0.1");
 
 		// Create host activator
 		hostActivator = new HostActivator();
@@ -88,9 +88,14 @@ public class OsgiMain {
 	
 	public <S> List<S> getServices(Class<S> serviceClass)
 	{
+		return getServices(serviceClass, null);
+	}
+	
+	public <S> List<S> getServices(Class<S> serviceClass, String filter)
+	{
 		Collection<ServiceReference<S>> refCollection = null;
 		try {
-			refCollection = hostActivator.getContext().getServiceReferences(serviceClass,null);
+			refCollection = hostActivator.getContext().getServiceReferences(serviceClass, filter);
 		} catch (InvalidSyntaxException e) {
 			LOGGER.error("Invalid Syntax", e);
 		}
@@ -106,10 +111,24 @@ public class OsgiMain {
 			result.add(hostActivator.getContext().getService(currentRef));
 		}
 		
-		
+		return result;
+	}
+	
+	public <S> S getService(Class<S> serviceClass, String filter) {
+		S result = null;
+		List<S> serviceCollection = getServices(serviceClass, filter);
+		if(serviceCollection.size() > 1)
+		{
+			throw new ModuleException("More than one service returned.");
+		}
+		else if(serviceCollection.size() == 1)
+		{
+			result = serviceCollection.get(0);
+		}
 		
 		return result;
 	}
+
 
 	public static OsgiMain getInstance() {
 		return OsgiMainHolder.INSTANCE;

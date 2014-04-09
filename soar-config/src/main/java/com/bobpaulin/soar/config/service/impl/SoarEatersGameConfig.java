@@ -15,12 +15,11 @@ import com.bobpaulin.soar.config.service.AbstractSoarGameConfig;
 import edu.umich.soar.gridmap2d.CognitiveArchitecture;
 import edu.umich.soar.gridmap2d.config.EatersConfig;
 import edu.umich.soar.gridmap2d.config.GameConfig;
+import edu.umich.soar.gridmap2d.config.SoarGameConfig;
 import edu.umich.soar.gridmap2d.visuals.EatersVisualWorld;
 import edu.umich.soar.gridmap2d.visuals.VisualWorld;
 import edu.umich.soar.gridmap2d.world.EatersWorld;
 import edu.umich.soar.gridmap2d.world.World;
-import edu.umich.soar.modules.services.SoarGameConfig;
-import edu.umich.soar.modules.services.WorldFactory;
 
 @Component(immediate=true,metatype=true)
 @Service
@@ -93,16 +92,13 @@ public class SoarEatersGameConfig extends AbstractSoarGameConfig implements Soar
 		return this.eatersConfig;
 	}
 	
-	public WorldFactory getWorldFactory() {
-		return new WorldFactory() {
-			
-			public World createWorld(CognitiveArchitecture cogArch) {
-			
-				return new EatersWorld(cogArch);
-			}
-			public VisualWorld createVisualWorld(Composite parent, int style, int cellSize) {
-				return new EatersVisualWorld(parent, style, cellSize);
-			}
-		};
+	@Override
+	public String getVisualWorldName() {
+		return getConfigName();
+	}
+	
+	@Override
+	public String getWorldName() {
+		return getConfigName();
 	}
 }

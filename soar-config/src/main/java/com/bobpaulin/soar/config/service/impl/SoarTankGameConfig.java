@@ -1,7 +1,5 @@
 package com.bobpaulin.soar.config.service.impl;
 
-import org.eclipse.swt.widgets.Composite;
-
 import java.util.Dictionary;
 
 import org.apache.felix.scr.annotations.Component;
@@ -13,15 +11,9 @@ import org.osgi.service.component.ComponentContext;
 
 import com.bobpaulin.soar.config.service.AbstractSoarGameConfig;
 
-import edu.umich.soar.gridmap2d.CognitiveArchitecture;
 import edu.umich.soar.gridmap2d.config.GameConfig;
+import edu.umich.soar.gridmap2d.config.SoarGameConfig;
 import edu.umich.soar.gridmap2d.config.TankSoarConfig;
-import edu.umich.soar.gridmap2d.visuals.TankSoarVisualWorld;
-import edu.umich.soar.gridmap2d.visuals.VisualWorld;
-import edu.umich.soar.gridmap2d.world.TankSoarWorld;
-import edu.umich.soar.gridmap2d.world.World;
-import edu.umich.soar.modules.services.SoarGameConfig;
-import edu.umich.soar.modules.services.WorldFactory;
 
 @Component(immediate=true,metatype=true)
 @Service
@@ -124,16 +116,14 @@ public class SoarTankGameConfig extends AbstractSoarGameConfig implements SoarGa
 		return this.tankSoarConfig;
 	}
 	
-	public WorldFactory getWorldFactory() {
-		return new WorldFactory() {
-			
-			public World createWorld(CognitiveArchitecture cogArch) {
-			
-				return new TankSoarWorld(tankSoarConfig.max_missile_packs, cogArch);
-			}
-			public VisualWorld createVisualWorld(Composite parent, int style, int cellSize) {
-				return new TankSoarVisualWorld(parent, style, cellSize);
-			}
-		};
+	@Override
+	public String getWorldName() {
+		return getConfigName();
 	}
+	
+	@Override
+	public String getVisualWorldName() {
+		return getConfigName();
+	}
+
 }

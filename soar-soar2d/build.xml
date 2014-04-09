@@ -15,8 +15,8 @@
 	<property name="target.classes" location="${target}/classes" />
 	<property name="main.resources" location="src/main/resources" />
 
-	<property name="java.source.level" value="1.7"/>
-	<property name="java.target.level" value="1.7"/>
+	<property name="java.source.level" value="1.6"/>
+	<property name="java.target.level" value="1.6"/>
 	
 	<property name="jar.name" value="Eaters_TankSoar.jar"/>
 

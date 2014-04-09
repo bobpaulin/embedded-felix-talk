@@ -42,7 +42,7 @@ import edu.umich.soar.gridmap2d.map.EatersMap;
 import edu.umich.soar.gridmap2d.players.CommandInfo;
 import edu.umich.soar.gridmap2d.players.Player;
 import edu.umich.soar.gridmap2d.world.World;
-import edu.umich.soar.modules.services.WorldFactory;
+import edu.umich.soar.gridmap2d.world.WorldFactory;
 
 
 public class WindowManager {
@@ -105,6 +105,8 @@ public class WindowManager {
 	public static final String kWorldCount = "World count: ";
 	
 	private WorldFactory worldFactory;
+	
+	private VisualWorldFactory visualWorldFactory;
 
 	private static void initColors(Display d) {
 	    white = d.getSystemColor(SWT.COLOR_WHITE);
@@ -582,7 +584,7 @@ public class WindowManager {
 		worldGroup = new Group(shell, SWT.NONE);
 		worldGroup.setLayout(new FillLayout());
 		
-		visualWorld = worldFactory.createVisualWorld(worldGroup, SWT.NONE, kTanksoarMainMapCellSize);
+		visualWorld = visualWorldFactory.createVisualWorld(worldGroup, SWT.NONE, kTanksoarMainMapCellSize);
 		visualWorld.setMap(world.getMap());
 
 		visualWorld.addKeyListener(new KeyAdapter() {
@@ -1130,5 +1132,10 @@ public class WindowManager {
 	public void setWorldFactory(WorldFactory worldFactory)
 	{
 		this.worldFactory = worldFactory;
+	}
+	
+	public void setVisualWorldFactory(VisualWorldFactory visualWorldFactory)
+	{
+		this.visualWorldFactory = visualWorldFactory;
 	}
 }
